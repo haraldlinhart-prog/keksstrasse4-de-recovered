@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Makler-Portal – Leibnizstr. 4, Schweinfurt</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--terracotta:#b5622f;--terracotta-dk:#8f4a20;--terracotta-lt:#d98a55;--cream:#faf5ec;--sand:#f0e6d6;--stone:#e4d7c1;--walnut:#3a2c1e;--walnut2:#5c4632;--ink:#2b2118;--ink2:#5a4d3f;--green:#5b7a4a;--ff-d:'Cormorant Garamond',Georgia,serif;--ff-b:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--ff-b);background:var(--cream);color:var(--ink);line-height:1.6;min-height:100vh}a{color:inherit}.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+h1,h2,h3{font-family:var(--ff-d);color:var(--walnut);font-weight:600}
+header{border-bottom:1px solid var(--stone);background:rgba(250,245,236,.92)}.nav-inner{max-width:1120px;margin:0 auto;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between}.logo{font-family:var(--ff-d);font-size:1.3rem;font-weight:600;color:var(--walnut);text-decoration:none;display:flex;flex-direction:column;line-height:1.15}.logo span{font-size:.62rem;font-family:var(--ff-b);letter-spacing:.14em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:600}.back-link{font-size:.82rem;color:var(--ink2);text-decoration:none}
+.hero-block{padding:clamp(2.4rem,6vw,3.6rem) 0 1.6rem}.hero-block .eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:700;margin-bottom:.6rem}.hero-block h1{font-size:clamp(1.8rem,4vw,2.6rem)}.hero-block p{color:var(--ink2);margin-top:.5rem}
+.card{background:#fff;border:1px solid var(--stone);border-radius:14px;padding:1.8rem;margin:1.6rem 0}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.2rem}.tab-btn{flex:1;padding:.7rem;border-radius:8px;border:1.5px solid var(--stone);background:var(--sand);color:var(--ink2);font-weight:600;font-size:.88rem;cursor:pointer;font-family:var(--ff-b)}.tab-btn.active{background:var(--terracotta);color:#fff;border-color:var(--terracotta)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.f-group{margin-bottom:.9rem}.f-group label{display:block;font-size:.78rem;font-weight:600;color:var(--ink2);margin-bottom:.3rem}.f-group input,.f-group textarea{width:100%;padding:.65rem .8rem;border:1.5px solid var(--stone);border-radius:7px;font-family:var(--ff-b);font-size:.9rem;background:var(--cream)}.f-group textarea{min-height:110px;resize:vertical}
+.check-group{margin-bottom:1rem}.check-group > label{display:block;font-size:.78rem;font-weight:600;color:var(--ink2);margin-bottom:.5rem}.check-row{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.5rem;font-size:.88rem}.check-row input{margin-top:.2rem}
+.submit-btn{width:100%;background:var(--terracotta);color:#fff;border:none;padding:.85rem;border-radius:8px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:var(--ff-b)}.submit-btn:disabled{opacity:.6}
+.form-msg{font-size:.85rem;padding:.6rem .8rem;border-radius:7px;margin-bottom:.9rem;display:none}.form-msg.success{background:#e6f0e0;color:var(--green);display:block}.form-msg.error{background:#fbe8e0;color:#a13a1a;display:block}
+.consent{font-size:.74rem;color:var(--ink2);margin-top:.6rem;line-height:1.5}
+.pdf-box{border:2px dashed var(--stone);border-radius:12px;padding:1.6rem;text-align:center;margin-top:1rem}.pdf-box p{color:var(--ink2);font-size:.9rem}
+.download-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--terracotta);color:#fff;padding:.8rem 1.6rem;border-radius:8px;font-weight:700;text-decoration:none;margin-top:.6rem}
+.logout-btn{background:none;border:1.5px solid var(--walnut2);color:var(--walnut);padding:.5rem 1.1rem;border-radius:7px;font-size:.82rem;cursor:pointer;font-family:var(--ff-b)}
+.dash-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
+#loading{padding:3rem 0;text-align:center;color:var(--ink2)}
+</style>
+</head>
+<body>
+<header><div class="nav-inner"><a class="logo" href="/">Leibnizstr. 4<span>Schweinfurt · seit 1933</span></a><a class="back-link" href="/">← Zurück zur Seite</a></div></header>
+
+<div id="loading" class="wrap"><p>Wird geladen…</p></div>
+
+<div id="app" style="display:none">
+<div class="wrap">
+  <div class="hero-block">
+    <p class="eyebrow">Für Makler</p>
+    <h1 id="pageTitle">Makler-Portal</h1>
+    <p id="pageSub">Registrieren Sie sich, wenn Sie mit uns beim Verkauf der Leibnizstr. 4, Schweinfurt zusammenarbeiten möchten. Sobald alle Daten, Bilder und Videos vorliegen, stellen wir hier ein Verkaufs-PDF zum Download bereit.</p>
+  </div>
+
+  <div id="authSection">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabRegister" onclick="switchTab('register')">Registrieren</button>
+      <button class="tab-btn" id="tabLogin" onclick="switchTab('login')">Login</button>
+    </div>
+
+    <div class="card" id="registerCard">
+      <div class="form-msg" id="regMsg"></div>
+      <form id="registerForm">
+        <div style="position:absolute;left:-9999px"><input type="text" id="reg_hp" tabindex="-1" autocomplete="off"></div>
+        <input type="hidden" id="reg_elapsed" value="0">
+        <div class="f-row">
+          <div class="f-group"><label>Name *</label><input type="text" id="r_name" required></div>
+          <div class="f-group"><label>Telefon</label><input type="tel" id="r_telefon"></div>
+        </div>
+        <div class="f-group"><label>Adresse</label><input type="text" id="r_adresse"></div>
+        <div class="f-row">
+          <div class="f-group"><label>E-Mail *</label><input type="email" id="r_email" required></div>
+          <div class="f-group"><label>Passwort * (min. 8 Zeichen)</label><input type="password" id="r_password" minlength="8" required></div>
+        </div>
+        <div class="check-group">
+          <label>Wie wird das Haus vermarktet?</label>
+          <div class="check-row"><input type="checkbox" id="r_kundenbestand"><label for="r_kundenbestand">Bestehender Kundenbestand</label></div>
+          <div class="check-row"><input type="checkbox" id="r_interessenten"><label for="r_interessenten">Es gibt bereits interessierte Kunden</label></div>
+          <div class="check-row"><input type="checkbox" id="r_neue_aktionen"><label for="r_neue_aktionen">Neue Marketing-Aktionen geplant</label></div>
+        </div>
+        <div class="f-group"><label>Ausführliche Infos an uns</label><textarea id="r_nachricht" placeholder="Erzählen Sie uns mehr über Ihr Vorgehen, Ihre Erfahrung mit vergleichbaren Objekten etc."></textarea></div>
+        <p class="consent">Details in unserer <a href="/#" onclick="window.location.href='/'+'#legal-datenschutz';return false" style="color:var(--terracotta-dk);text-decoration:underline">Datenschutzerklärung</a>.</p>
+        <button type="submit" class="submit-btn" style="margin-top:1rem">Registrieren &amp; einloggen</button>
+      </form>
+    </div>
+
+    <div class="card" id="loginCard" style="display:none">
+      <div class="form-msg" id="loginMsg"></div>
+      <form id="loginForm">
+        <div class="f-group"><label>E-Mail *</label><input type="email" id="l_email" required></div>
+        <div class="f-group"><label>Passwort *</label><input type="password" id="l_password" required></div>
+        <button type="submit" class="submit-btn">Einloggen</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="dashSection" class="card" style="display:none">
+    <div class="dash-head">
+      <h3 id="dashGreeting">Willkommen</h3>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    <div id="pdfArea"></div>
+  </div>
+
+  <footer>Leibnizstr. 4 · Schweinfurt · Privater Verkauf durch Erbengemeinschaft</footer>
+</div>
+</div>
+
+<script>
+function switchTab(tab){
+  document.getElementById('tabRegister').classList.toggle('active', tab==='register');
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+  document.getElementById('registerCard').style.display = tab==='register' ? 'block' : 'none';
+  document.getElementById('loginCard').style.display = tab==='login' ? 'block' : 'none';
+}
+
+function showDash(data){
+  document.getElementById('authSection').style.display = 'none';
+  document.getElementById('dashSection').style.display = 'block';
+  document.getElementById('pageTitle').textContent = 'Makler-Portal';
+  document.getElementById('pageSub').textContent = 'Hier finden Sie das Verkaufs-PDF, sobald es bereitsteht.';
+  document.getElementById('dashGreeting').textContent = 'Willkommen, ' + data.name;
+  var area = document.getElementById('pdfArea');
+  if (data.pdfUrl) {
+    area.innerHTML = '<div class="pdf-box"><p>Das Verkaufs-PDF für die Leibnizstr. 4, Schweinfurt steht bereit.</p><a class="download-btn" href="' + data.pdfUrl + '" target="_blank" rel="noopener">⬇ Verkaufs-PDF herunterladen</a></div>';
+  } else {
+    area.innerHTML = '<div class="pdf-box"><p>Das Verkaufs-PDF wird derzeit vorbereitet und erscheint hier, sobald alle Daten, Bilder und Videos vorliegen. Wir informieren Sie zusätzlich per E-Mail.</p></div>';
+  }
+}
+
+async function checkSession(){
+  try {
+    var res = await fetch('/api/broker-me');
+    if (res.ok) {
+      var data = await res.json();
+      showDash(data);
+    }
+  } catch(e) {}
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+checkSession();
+
+['reg'].forEach(function(p){ document.getElementById(p+'_elapsed').dataset.start = Date.now(); });
+function elapsedFor(prefix){var ef=document.getElementById(prefix+'_elapsed');var start=parseInt(ef&&ef.dataset.start||'0',10);return start?Math.floor((Date.now()-start)/1000):99;}
+
+document.getElementById('registerForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var msg = document.getElementById('regMsg');
+  var btn = this.querySelector('.submit-btn');
+  var honeypot = document.getElementById('reg_hp').value;
+  if (honeypot) return;
+  btn.disabled = true; btn.textContent = 'Wird gesendet…'; msg.className = 'form-msg';
+  try {
+    var res = await fetch('/api/broker-register', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name: document.getElementById('r_name').value,
+        adresse: document.getElementById('r_adresse').value,
+        email: document.getElementById('r_email').value,
+        telefon: document.getElementById('r_telefon').value,
+        password: document.getElementById('r_password').value,
+        kundenbestand: document.getElementById('r_kundenbestand').checked,
+        interessenten: document.getElementById('r_interessenten').checked,
+        neue_aktionen: document.getElementById('r_neue_aktionen').checked,
+        nachricht: document.getElementById('r_nachricht').value,
+        _hp: honeypot, _elapsed: elapsedFor('reg')
+      })
+    });
+    var data = await res.json();
+    if (res.ok && data.ok) {
+      var meRes = await fetch('/api/broker-me');
+      var meData = await meRes.json();
+      showDash(meData);
+    } else {
+      msg.className = 'form-msg error'; msg.textContent = data.error || 'Fehler.';
+    }
+  } catch(err) {
+    msg.className = 'form-msg error'; msg.textContent = 'Verbindungsfehler.';
+  }
+  btn.disabled = false; btn.textContent = 'Registrieren & einloggen';
+});
+
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var msg = document.getElementById('loginMsg');
+  var btn = this.querySelector('.submit-btn');
+  btn.disabled = true; btn.textContent = 'Wird geprüft…'; msg.className = 'form-msg';
+  try {
+    var res = await fetch('/api/broker-login', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email: document.getElementById('l_email').value, password: document.getElementById('l_password').value })
+    });
+    var data = await res.json();
+    if (res.ok && data.ok) {
+      var meRes = await fetch('/api/broker-me');
+      var meData = await meRes.json();
+      showDash(meData);
+    } else {
+      msg.className = 'form-msg error'; msg.textContent = data.error || 'Fehler.';
+    }
+  } catch(err) {
+    msg.className = 'form-msg error'; msg.textContent = 'Verbindungsfehler.';
+  }
+  btn.disabled = false; btn.textContent = 'Einloggen';
+});
+
+async function logout(){
+  await fetch('/api/broker-logout', { method: 'POST' }).catch(function(){});
+  window.location.reload();
+}
+</script>
+</body>
+</html>
