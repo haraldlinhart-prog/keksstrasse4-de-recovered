@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaufangebot abgeben – Leibnizstr. 4, Schweinfurt</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--terracotta:#b5622f;--terracotta-dk:#8f4a20;--terracotta-lt:#d98a55;--cream:#faf5ec;--sand:#f0e6d6;--stone:#e4d7c1;--walnut:#3a2c1e;--walnut2:#5c4632;--ink:#2b2118;--ink2:#5a4d3f;--green:#5b7a4a;--ff-d:'Cormorant Garamond',Georgia,serif;--ff-b:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--ff-b);background:var(--cream);color:var(--ink);line-height:1.6;min-height:100vh}a{color:inherit}.wrap{max-width:680px;margin:0 auto;padding:0 1.5rem}
+h1,h2,h3{font-family:var(--ff-d);color:var(--walnut);font-weight:600}
+header{border-bottom:1px solid var(--stone);background:rgba(250,245,236,.92)}.nav-inner{max-width:1120px;margin:0 auto;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between}.logo{font-family:var(--ff-d);font-size:1.3rem;font-weight:600;color:var(--walnut);text-decoration:none;display:flex;flex-direction:column;line-height:1.15}.logo span{font-size:.62rem;font-family:var(--ff-b);letter-spacing:.14em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:600}.back-link{font-size:.82rem;color:var(--ink2);text-decoration:none}
+.hero-block{padding:clamp(2.4rem,6vw,3.6rem) 0 1.6rem}.hero-block .eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:700;margin-bottom:.6rem}.hero-block h1{font-size:clamp(1.8rem,4vw,2.6rem)}.hero-block p{color:var(--ink2);margin-top:.5rem}
+.card{background:#fff;border:1px solid var(--stone);border-radius:14px;padding:1.8rem;margin:1rem 0 2.4rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.f-group{margin-bottom:.9rem}.f-group label{display:block;font-size:.78rem;font-weight:600;color:var(--ink2);margin-bottom:.3rem}.f-group input,.f-group select,.f-group textarea{width:100%;padding:.65rem .8rem;border:1.5px solid var(--stone);border-radius:7px;font-family:var(--ff-b);font-size:.9rem;background:var(--cream)}.f-group textarea{min-height:90px;resize:vertical}
+.radio-row{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.6rem;font-size:.9rem}.radio-row input{margin-top:.25rem}
+.section-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:700;margin:1.4rem 0 .6rem}
+.bindefrist-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.submit-btn{width:100%;background:var(--terracotta);color:#fff;border:none;padding:.85rem;border-radius:8px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:var(--ff-b)}.submit-btn:disabled{opacity:.6}
+.form-msg{font-size:.85rem;padding:.6rem .8rem;border-radius:7px;margin-bottom:.9rem;display:none}.form-msg.success{background:#e6f0e0;color:var(--green);display:block}.form-msg.error{background:#fbe8e0;color:#a13a1a;display:block}
+.consent{font-size:.74rem;color:var(--ink2);margin-top:.8rem;line-height:1.5}.consent a{color:var(--terracotta-dk);text-decoration:underline}
+footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
+#eigenkapitalGroup{display:none}
+</style>
+</head>
+<body>
+<header><div class="nav-inner"><a class="logo" href="/">Leibnizstr. 4<span>Schweinfurt · seit 1933</span></a><a class="back-link" href="/">← Zurück zur Seite</a></div></header>
+
+<div class="wrap">
+  <div class="hero-block">
+    <p class="eyebrow">Kaufinteresse</p>
+    <h1>Kaufangebot abgeben</h1>
+    <p>Registrieren Sie sich kurz und teilen Sie uns Ihr Kaufangebot für die Leibnizstr. 4, Schweinfurt mit.</p>
+  </div>
+
+  <div class="card">
+    <div class="form-msg" id="angebotMsg"></div>
+    <form id="angebotForm">
+      <div style="position:absolute;left:-9999px"><input type="text" id="o_hp" tabindex="-1" autocomplete="off"></div>
+      <input type="hidden" id="o_elapsed" value="0">
+
+      <div class="section-label">Ihre Daten</div>
+      <div class="f-group"><label>Name *</label><input type="text" id="o_name" required></div>
+      <div class="f-row">
+        <div class="f-group"><label>E-Mail *</label><input type="email" id="o_email" required></div>
+        <div class="f-group"><label>Adresse</label><input type="text" id="o_adresse"></div>
+      </div>
+
+      <div class="section-label">Ihr Angebot</div>
+      <div class="f-group"><label>Kaufangebot in € *</label><input type="number" id="o_betrag" min="1" step="1000" required></div>
+
+      <div class="f-group">
+        <label>Ist der Kaufpreis in liquiden Mitteln vorhanden oder muss erst eine Bankenfinanzierung angestoßen werden? *</label>
+        <div class="radio-row"><input type="radio" name="fin" id="o_fin_liquide" value="liquide" required><label for="o_fin_liquide">Kaufpreis ist in liquiden Mitteln vorhanden</label></div>
+        <div class="radio-row"><input type="radio" name="fin" id="o_fin_finanzierung" value="finanzierung"><label for="o_fin_finanzierung">Bankenfinanzierung muss erst angestoßen werden</label></div>
+      </div>
+      <div class="f-group" id="eigenkapitalGroup"><label>Mit welchem Eigenkapital?</label><input type="text" id="o_eigenkapital" placeholder="z. B. 80.000 €"></div>
+
+      <div class="section-label">Bindefrist</div>
+      <div class="f-group"><label>Wie lange möchten Sie sich an das Angebot halten? *</label>
+        <div class="bindefrist-row">
+          <input type="number" id="o_bindefrist_wert" min="1" required placeholder="Anzahl">
+          <select id="o_bindefrist_einheit" required>
+            <option value="">Einheit wählen</option>
+            <option value="Tage">Tage</option>
+            <option value="Wochen">Wochen</option>
+            <option value="Monate">Monate</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="f-group"><label>Zusätzliche Infos</label><textarea id="o_nachricht"></textarea></div>
+
+      <p class="consent">Details in unserer <a href="/#legal-datenschutz">Datenschutzerklärung</a>.</p>
+      <button type="submit" class="submit-btn" style="margin-top:1rem">Kaufangebot senden</button>
+    </form>
+  </div>
+
+  <footer>Leibnizstr. 4 · Schweinfurt · Privater Verkauf durch Erbengemeinschaft</footer>
+</div>
+
+<script>
+document.getElementById('o_elapsed').dataset.start = Date.now();
+function elapsedFor(){var ef=document.getElementById('o_elapsed');var start=parseInt(ef.dataset.start||'0',10);return start?Math.floor((Date.now()-start)/1000):99;}
+
+document.querySelectorAll('input[name="fin"]').forEach(function(r){
+  r.addEventListener('change', function(){
+    document.getElementById('eigenkapitalGroup').style.display = (this.value === 'finanzierung' && this.checked) ? 'block' : (document.getElementById('o_fin_finanzierung').checked ? 'block' : 'none');
+  });
+});
+
+document.getElementById('angebotForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var msg = document.getElementById('angebotMsg');
+  var btn = this.querySelector('.submit-btn');
+  var honeypot = document.getElementById('o_hp').value;
+  if (honeypot) return;
+  var finRadio = document.querySelector('input[name="fin"]:checked');
+  if (!finRadio) { msg.className = 'form-msg error'; msg.textContent = 'Bitte wählen Sie eine Finanzierungsart.'; return; }
+  btn.disabled = true; btn.textContent = 'Wird gesendet…'; msg.className = 'form-msg';
+  try {
+    var res = await fetch('/api/kaufangebot', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name: document.getElementById('o_name').value,
+        email: document.getElementById('o_email').value,
+        adresse: document.getElementById('o_adresse').value,
+        kaufangebot_eur: document.getElementById('o_betrag').value,
+        finanzierung_art: finRadio.value,
+        eigenkapital_eur: document.getElementById('o_eigenkapital').value,
+        bindefrist_wert: document.getElementById('o_bindefrist_wert').value,
+        bindefrist_einheit: document.getElementById('o_bindefrist_einheit').value,
+        nachricht: document.getElementById('o_nachricht').value,
+        _hp: honeypot, _elapsed: elapsedFor()
+      })
+    });
+    var data = await res.json();
+    if (res.ok && data.ok) {
+      msg.className = 'form-msg success';
+      msg.textContent = 'Vielen Dank für Ihr Kaufangebot! Wir melden uns bei Ihnen.';
+      this.reset();
+      document.getElementById('eigenkapitalGroup').style.display = 'none';
+    } else {
+      msg.className = 'form-msg error'; msg.textContent = data.error || 'Fehler.';
+    }
+  } catch(err) {
+    msg.className = 'form-msg error'; msg.textContent = 'Verbindungsfehler.';
+  }
+  btn.disabled = false; btn.textContent = 'Kaufangebot senden';
+});
+</script>
+</body>
+</html>
