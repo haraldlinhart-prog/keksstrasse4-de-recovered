@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mietantrag Bauernwohnung – Leibnizstr. 4, Schweinfurt</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--terracotta:#b5622f;--terracotta-dk:#8f4a20;--terracotta-lt:#d98a55;--cream:#faf5ec;--sand:#f0e6d6;--stone:#e4d7c1;--walnut:#3a2c1e;--walnut2:#5c4632;--ink:#2b2118;--ink2:#5a4d3f;--green:#5b7a4a;--ff-d:'Cormorant Garamond',Georgia,serif;--ff-b:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--ff-b);background:var(--cream);color:var(--ink);line-height:1.6;min-height:100vh}a{color:inherit}.wrap{max-width:680px;margin:0 auto;padding:0 1.5rem}
+h1,h2,h3{font-family:var(--ff-d);color:var(--walnut);font-weight:600}
+header{border-bottom:1px solid var(--stone);background:rgba(250,245,236,.92)}.nav-inner{max-width:1120px;margin:0 auto;padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between}.logo{font-family:var(--ff-d);font-size:1.3rem;font-weight:600;color:var(--walnut);text-decoration:none;display:flex;flex-direction:column;line-height:1.15}.logo span{font-size:.62rem;font-family:var(--ff-b);letter-spacing:.14em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:600}.back-link{font-size:.82rem;color:var(--ink2);text-decoration:none}
+.hero-block{padding:clamp(2.4rem,6vw,3.6rem) 0 1.6rem}.hero-block .eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:700;margin-bottom:.6rem}.hero-block h1{font-size:clamp(1.8rem,4vw,2.6rem)}.hero-block p{color:var(--ink2);margin-top:.5rem}
+.card{background:#fff;border:1px solid var(--stone);border-radius:14px;padding:1.8rem;margin:1rem 0 2.4rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.f-group{margin-bottom:.9rem}.f-group label{display:block;font-size:.78rem;font-weight:600;color:var(--ink2);margin-bottom:.3rem}.f-group input,.f-group select,.f-group textarea{width:100%;padding:.65rem .8rem;border:1.5px solid var(--stone);border-radius:7px;font-family:var(--ff-b);font-size:.9rem;background:var(--cream)}.f-group textarea{min-height:100px;resize:vertical}
+.check-row{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.9rem;font-size:.9rem}.check-row input{margin-top:.25rem}
+.section-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--terracotta-dk);font-weight:700;margin:1.4rem 0 .6rem}
+.submit-btn{width:100%;background:var(--terracotta);color:#fff;border:none;padding:.85rem;border-radius:8px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:var(--ff-b)}.submit-btn:disabled{opacity:.6}
+.form-msg{font-size:.85rem;padding:.6rem .8rem;border-radius:7px;margin-bottom:.9rem;display:none}.form-msg.success{background:#e6f0e0;color:var(--green);display:block}.form-msg.error{background:#fbe8e0;color:#a13a1a;display:block}
+.consent{font-size:.74rem;color:var(--ink2);margin-top:.8rem;line-height:1.5}.consent a{color:var(--terracotta-dk);text-decoration:underline}
+footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
+#haustiereWelcheGroup{display:none}
+</style>
+</head>
+<body>
+<header><div class="nav-inner"><a class="logo" href="/">Leibnizstr. 4<span>Schweinfurt · seit 1933</span></a><a class="back-link" href="/">← Zurück zur Seite</a></div></header>
+
+<div class="wrap">
+  <div class="hero-block">
+    <p class="eyebrow">Mietantrag</p>
+    <h1>Mietantrag Bauernwohnung</h1>
+    <p>Bitte füllen Sie den Antrag vollständig aus. Wir melden uns nach Prüfung Ihrer Angaben bei Ihnen.</p>
+  </div>
+
+  <div class="card">
+    <div class="form-msg" id="antragMsg"></div>
+    <form id="antragForm">
+      <div style="position:absolute;left:-9999px"><input type="text" id="a_hp" tabindex="-1" autocomplete="off"></div>
+      <input type="hidden" id="a_elapsed" value="0">
+
+      <div class="section-label">Persönliche Daten</div>
+      <div class="f-row">
+        <div class="f-group"><label>Name *</label><input type="text" id="a_name" required></div>
+        <div class="f-group"><label>Telefon</label><input type="tel" id="a_telefon"></div>
+      </div>
+      <div class="f-group"><label>Adresse</label><input type="text" id="a_adresse"></div>
+      <div class="f-group"><label>E-Mail *</label><input type="email" id="a_email" required></div>
+
+      <div class="section-label">Beruf & Einkommen</div>
+      <div class="f-row">
+        <div class="f-group"><label>Tätigkeit</label><input type="text" id="a_taetigkeit" placeholder="z. B. Angestellter, Selbstständig, Rentner …"></div>
+        <div class="f-group"><label>Monatliches Einkommen (netto)</label><input type="text" id="a_einkommen" placeholder="z. B. 2.400 €"></div>
+      </div>
+      <div class="f-group"><label>Quelle des Einkommens</label><input type="text" id="a_quelle" placeholder="z. B. Arbeitgeber, eigenes Gewerbe, Rente …"></div>
+      <div class="f-group"><label>Finanzielle Verhältnisse</label><textarea id="a_finanzen" placeholder="Kurze Einschätzung Ihrer finanziellen Situation, ggf. Bürgschaft, Schufa etc."></textarea></div>
+
+      <div class="section-label">Haushalt</div>
+      <div class="f-row">
+        <div class="f-group"><label>Anzahl Personen im Haushalt</label><input type="text" id="a_personen"></div>
+        <div class="f-group" style="display:flex;flex-direction:column;justify-content:flex-end">
+          <div class="check-row"><input type="checkbox" id="a_haustiere"><label for="a_haustiere">Haustiere vorhanden</label></div>
+        </div>
+      </div>
+      <div class="f-group" id="haustiereWelcheGroup"><label>Welche Haustiere?</label><input type="text" id="a_haustiere_welche" placeholder="z. B. 1 Hund, 2 Katzen"></div>
+
+      <div class="section-label">Sonstiges</div>
+      <div class="f-group"><label>Zusätzliche Infos</label><textarea id="a_nachricht" placeholder="Alles Weitere, das wir wissen sollten."></textarea></div>
+
+      <p class="consent">Details in unserer <a href="/#legal-datenschutz">Datenschutzerklärung</a>.</p>
+      <button type="submit" class="submit-btn" style="margin-top:1rem">Mietantrag senden</button>
+    </form>
+  </div>
+
+  <footer>Leibnizstr. 4 · Schweinfurt · Privater Verkauf durch Erbengemeinschaft</footer>
+</div>
+
+<script>
+document.getElementById('a_elapsed').dataset.start = Date.now();
+function elapsedFor(){var ef=document.getElementById('a_elapsed');var start=parseInt(ef.dataset.start||'0',10);return start?Math.floor((Date.now()-start)/1000):99;}
+
+document.getElementById('a_haustiere').addEventListener('change', function(){
+  document.getElementById('haustiereWelcheGroup').style.display = this.checked ? 'block' : 'none';
+});
+
+document.getElementById('antragForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var msg = document.getElementById('antragMsg');
+  var btn = this.querySelector('.submit-btn');
+  var honeypot = document.getElementById('a_hp').value;
+  if (honeypot) return;
+  btn.disabled = true; btn.textContent = 'Wird gesendet…'; msg.className = 'form-msg';
+  try {
+    var res = await fetch('/api/bauernwohnung-antrag', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name: document.getElementById('a_name').value,
+        adresse: document.getElementById('a_adresse').value,
+        email: document.getElementById('a_email').value,
+        telefon: document.getElementById('a_telefon').value,
+        taetigkeit: document.getElementById('a_taetigkeit').value,
+        einkommen_monatlich: document.getElementById('a_einkommen').value,
+        einkommen_quelle: document.getElementById('a_quelle').value,
+        finanzielle_verhaeltnisse: document.getElementById('a_finanzen').value,
+        anzahl_personen: document.getElementById('a_personen').value,
+        haustiere: document.getElementById('a_haustiere').checked,
+        haustiere_welche: document.getElementById('a_haustiere_welche').value,
+        nachricht: document.getElementById('a_nachricht').value,
+        _hp: honeypot, _elapsed: elapsedFor()
+      })
+    });
+    var data = await res.json();
+    if (res.ok && data.ok) {
+      msg.className = 'form-msg success';
+      msg.textContent = 'Vielen Dank für Ihren Mietantrag! Wir melden uns bei Ihnen.';
+      this.reset();
+      document.getElementById('haustiereWelcheGroup').style.display = 'none';
+    } else {
+      msg.className = 'form-msg error'; msg.textContent = data.error || 'Fehler.';
+    }
+  } catch(err) {
+    msg.className = 'form-msg error'; msg.textContent = 'Verbindungsfehler.';
+  }
+  btn.disabled = false; btn.textContent = 'Mietantrag senden';
+});
+</script>
+</body>
+</html>
