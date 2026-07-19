@@ -11,6 +11,11 @@ module.exports = async (req, res) => {
   if (!isNaN(elapsed) && elapsed < 3) return res.status(200).json({ ok: true });
   const name = sanitize(body.name || '');
   const adresse = sanitize(body.adresse || '');
+  const taetigkeitsbereich = sanitize(body.taetigkeitsbereich || '');
+  const arbeitsweise = (body.arbeitsweise === 'team') ? 'team' : 'allein';
+  let kollegen_anzahl = parseInt(body.kollegen_anzahl, 10);
+  if (arbeitsweise !== 'team' || isNaN(kollegen_anzahl) || kollegen_anzahl < 1) kollegen_anzahl = 0;
+  const website = sanitize(body.website || '');
   const email = sanitize((body.email || '').toLowerCase());
   const telefon = sanitize(body.telefon || '');
   const kundenbestand = !!body.kundenbestand;
@@ -20,6 +25,8 @@ module.exports = async (req, res) => {
   const password = String(body.password || '');
   if (isGibberish(nachricht) || isGibberish(name)) return res.status(200).json({ ok: true });
   if (!name || !email || !password) return res.status(400).json({ error: 'Name, E-Mail und Passwort sind Pflichtfelder.' });
+  if (!taetigkeitsbereich) return res.status(400).json({ error: 'Bitte geben Sie Ihren regionalen Tätigkeitsbereich an.' });
+  if (website && !/^https?:\/\/.+/i.test(website)) return res.status(400).json({ error: 'Bitte geben Sie eine gültige Website-Adresse (mit https://) an.' });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Ungültige E-Mail-Adresse.' });
   if (password.length < 8) return res.status(400).json({ error: 'Passwort muss mindestens 8 Zeichen haben.' });
   const supabase = getSupabase();
@@ -28,6 +35,7 @@ module.exports = async (req, res) => {
   const { hash, salt } = hashPassword(password);
   const { data: created, error: dbError } = await supabase.from('keks_broker_accounts').insert({
     name, adresse, email, telefon,
+    taetigkeitsbereich, arbeitsweise, kollegen_anzahl, website,
     vermarktung_kundenbestand: kundenbestand,
     vermarktung_interessenten: interessenten,
     vermarktung_neue_aktionen: neue_aktionen,
@@ -40,7 +48,8 @@ module.exports = async (req, res) => {
     interessenten ? 'Es gibt bereits interessierte Kunden' : null,
     neue_aktionen ? 'Neue Marketing-Aktionen geplant' : null
   ].filter(Boolean).join(', ') || '-';
-  const html = `<h2>Neue Makler-Registrierung</h2><p>${name} | ${email} | ${telefon||'-'}</p><p>Adresse: ${adresse||'-'}</p><p>Vermarktung: ${vermarktungList}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
+  const teamText = arbeitsweise === 'team' ? `arbeitet mit ${kollegen_anzahl} Kolleg:in(nen)` : 'arbeitet allein';
+  const html = `<h2>Neue Makler-Registrierung</h2><p>${name} | ${email} | ${telefon||'-'}</p><p>Adresse: ${adresse||'-'}</p><p>Tätigkeitsbereich: ${taetigkeitsbereich}</p><p>${teamText}</p><p>Website: ${website||'-'}</p><p>Vermarktung: ${vermarktungList}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
   await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, replyTo: email, subject: `Makler-Registrierung – ${name}`, html }).catch(e => console.error('Mail-Fehler:', e));
   const token = signSession({ id: created.id, email, exp: Date.now() + 90 * 24 * 60 * 60 * 1000 });
   res.setHeader('Set-Cookie', `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${90 * 24 * 60 * 60}`);

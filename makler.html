@@ -55,6 +55,21 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
           <div class="f-group"><label>Telefon</label><input type="tel" id="r_telefon"></div>
         </div>
         <div class="f-group"><label>Adresse</label><input type="text" id="r_adresse"></div>
+        <div class="f-group"><label>Mein/unser Tätigkeitsbereich ist im regionalen Raum von: *</label><input type="text" id="r_taetigkeitsbereich" placeholder="z. B. Schweinfurt und Umgebung, 30 km Radius …" required></div>
+        <div class="f-group">
+          <label>Ich arbeite</label>
+          <div class="check-row" style="align-items:center">
+            <input type="radio" name="r_arbeitsweise" id="r_allein" value="allein" checked onchange="toggleKollegenInput()">
+            <label for="r_allein" style="font-weight:400">allein</label>
+          </div>
+          <div class="check-row" style="align-items:center">
+            <input type="radio" name="r_arbeitsweise" id="r_team" value="team" onchange="toggleKollegenInput()">
+            <label for="r_team" style="font-weight:400">mit</label>
+            <input type="number" id="r_kollegen_anzahl" min="1" style="width:70px;padding:.4rem .5rem;border:1.5px solid var(--stone);border-radius:7px;font-family:var(--ff-b);font-size:.9rem;background:var(--cream)" disabled>
+            <label for="r_kollegen_anzahl" style="font-weight:400">Kolleg:innen</label>
+          </div>
+        </div>
+        <div class="f-group"><label>Die Adresse unserer Website lautet</label><input type="url" id="r_website" placeholder="https://www.ihre-maklerseite.de"></div>
         <div class="f-row">
           <div class="f-group"><label>E-Mail *</label><input type="email" id="r_email" required></div>
           <div class="f-group"><label>Passwort * (min. 8 Zeichen)</label><input type="password" id="r_password" minlength="8" required></div>
@@ -131,6 +146,14 @@ checkSession();
 ['reg'].forEach(function(p){ document.getElementById(p+'_elapsed').dataset.start = Date.now(); });
 function elapsedFor(prefix){var ef=document.getElementById(prefix+'_elapsed');var start=parseInt(ef&&ef.dataset.start||'0',10);return start?Math.floor((Date.now()-start)/1000):99;}
 
+function toggleKollegenInput(){
+  var isTeam = document.getElementById('r_team').checked;
+  var input = document.getElementById('r_kollegen_anzahl');
+  input.disabled = !isTeam;
+  if (isTeam && !input.value) input.value = 1;
+  if (!isTeam) input.value = '';
+}
+
 document.getElementById('registerForm').addEventListener('submit', async function(e){
   e.preventDefault();
   var msg = document.getElementById('regMsg');
@@ -144,6 +167,10 @@ document.getElementById('registerForm').addEventListener('submit', async functio
       body: JSON.stringify({
         name: document.getElementById('r_name').value,
         adresse: document.getElementById('r_adresse').value,
+        taetigkeitsbereich: document.getElementById('r_taetigkeitsbereich').value,
+        arbeitsweise: document.getElementById('r_team').checked ? 'team' : 'allein',
+        kollegen_anzahl: document.getElementById('r_team').checked ? document.getElementById('r_kollegen_anzahl').value : 0,
+        website: document.getElementById('r_website').value,
         email: document.getElementById('r_email').value,
         telefon: document.getElementById('r_telefon').value,
         password: document.getElementById('r_password').value,
