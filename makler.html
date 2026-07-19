@@ -58,6 +58,7 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
           <div class="f-group"><label>Name *</label><input type="text" id="r_name" required></div>
           <div class="f-group"><label>Telefon</label><input type="tel" id="r_telefon"></div>
         </div>
+        <div class="f-group"><label>Firmenname (falls zutreffend)</label><input type="text" id="r_firmenname" placeholder="Falls Sie nicht freiberuflich, sondern für eine Gesellschaft tätig sind"></div>
         <div class="f-group"><label>Adresse</label><input type="text" id="r_adresse"></div>
         <div class="f-group"><label>Mein/unser Tätigkeitsbereich ist im regionalen Raum von: *</label><input type="text" id="r_taetigkeitsbereich" placeholder="z. B. Schweinfurt und Umgebung, 30 km Radius …" required></div>
         <div class="check-group">
@@ -78,6 +79,10 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
           <label>Wie wird das Haus vermarktet?</label>
           <div class="check-row"><input type="checkbox" id="r_kundenbestand"><label for="r_kundenbestand">Bestehender Kundenbestand</label></div>
           <div class="check-row"><input type="checkbox" id="r_interessenten"><label for="r_interessenten">Es gibt bereits interessierte Kunden</label></div>
+          <div class="check-row"><input type="checkbox" id="r_portale"><label for="r_portale">Vermarktung über Immobilienportale (ImmoScout24, Immowelt etc.)</label></div>
+          <div class="check-row"><input type="checkbox" id="r_social_media"><label for="r_social_media">Social-Media-Marketing</label></div>
+          <div class="check-row"><input type="checkbox" id="r_print"><label for="r_print">Print-/Zeitungsanzeigen</label></div>
+          <div class="check-row"><input type="checkbox" id="r_eigene_website"><label for="r_eigene_website">Eigenes Exposé auf der Firmen-Website</label></div>
           <div class="check-row"><input type="checkbox" id="r_neue_aktionen"><label for="r_neue_aktionen">Neue Marketing-Aktionen geplant</label></div>
         </div>
         <div class="f-group"><label>Ausführliche Infos an uns</label><textarea id="r_nachricht" placeholder="Erzählen Sie uns mehr über Ihr Vorgehen, Ihre Erfahrung mit vergleichbaren Objekten etc."></textarea></div>
@@ -166,6 +171,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
         name: document.getElementById('r_name').value,
+        firmenname: document.getElementById('r_firmenname').value,
         adresse: document.getElementById('r_adresse').value,
         taetigkeitsbereich: document.getElementById('r_taetigkeitsbereich').value,
         arbeitsweise: document.getElementById('r_team').checked ? 'team' : 'allein',
@@ -176,6 +182,10 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         password: document.getElementById('r_password').value,
         kundenbestand: document.getElementById('r_kundenbestand').checked,
         interessenten: document.getElementById('r_interessenten').checked,
+        portale: document.getElementById('r_portale').checked,
+        social_media: document.getElementById('r_social_media').checked,
+        print: document.getElementById('r_print').checked,
+        eigene_website: document.getElementById('r_eigene_website').checked,
         neue_aktionen: document.getElementById('r_neue_aktionen').checked,
         nachricht: document.getElementById('r_nachricht').value,
         _hp: honeypot, _elapsed: elapsedFor('reg')
