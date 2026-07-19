@@ -1,4 +1,4 @@
-const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, SEND_FROM } = require('../lib/shared');
+const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, NOTIFY_CC_MARTIN, SEND_FROM } = require('../lib/shared');
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
@@ -29,6 +29,6 @@ module.exports = async (req, res) => {
   const ts = new Date().toLocaleString('de-DE');
   const betragFormatted = betrag_eur.toLocaleString('de-DE');
   const html = `<h2>Neues Kaufgebot: ${betragFormatted} €</h2><p>${vorname} ${nachname} | ${email} | ${telefon||'-'}</p><p>Adresse: ${adresse||'-'} | Finanzierung: ${finanzierung_status||'-'}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
-  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, replyTo: email, subject: `Kaufgebot ${betragFormatted} € – ${vorname} ${nachname}`, html }).catch(e => console.error('Mail-Fehler:', e));
+  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, cc: NOTIFY_CC_MARTIN, replyTo: email, subject: `Kaufgebot ${betragFormatted} € – ${vorname} ${nachname}`, html }).catch(e => console.error('Mail-Fehler:', e));
   res.status(200).json({ ok: true });
 };
