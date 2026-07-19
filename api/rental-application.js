@@ -1,4 +1,4 @@
-const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, SEND_FROM } = require('../lib/shared');
+const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, NOTIFY_CC_MARTIN, SEND_FROM } = require('../lib/shared');
 const UNIT_LABELS = { eg: 'Erdgeschoss', og1: '1. Stock', og2_mansarde: '2. Stock / Mansarde' };
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -32,6 +32,6 @@ module.exports = async (req, res) => {
   const unitLabel = UNIT_LABELS[unit] || unit;
   const ts = new Date().toLocaleString('de-DE');
   const html = `<h2>Neue Mietbewerbung – ${unitLabel}</h2><p>${vorname} ${nachname} | ${email} | ${telefon||'-'}</p><p>Geburtsdatum: ${geburtsdatum||'-'} | Adresse: ${adresse||'-'}</p><p>Haushalt: ${haushalt||'-'} | Haustiere: ${haustiere||'-'} | Beruf: ${einkommen_info||'-'}</p><p>Einzug: ${einzugstermin||'-'}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
-  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, replyTo: email, subject: `Mietbewerbung ${unitLabel} – ${vorname} ${nachname}`, html }).catch(e => console.error('Mail-Fehler:', e));
+  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, cc: NOTIFY_CC_MARTIN, replyTo: email, subject: `Mietbewerbung ${unitLabel} – ${vorname} ${nachname}`, html }).catch(e => console.error('Mail-Fehler:', e));
   res.status(200).json({ ok: true });
 };

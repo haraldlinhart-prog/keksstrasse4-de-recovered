@@ -1,4 +1,4 @@
-const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, SEND_FROM, hashPassword, signSession, SESSION_COOKIE } = require('../lib/shared');
+const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, NOTIFY_CC_MARTIN, SEND_FROM, hashPassword, signSession, SESSION_COOKIE } = require('../lib/shared');
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
   ].filter(Boolean).join(', ') || '-';
   const teamText = arbeitsweise === 'team' ? `arbeitet mit ${kollegen_anzahl} Kolleg:in(nen)` : 'arbeitet allein';
   const html = `<h2>Neue Makler-Registrierung</h2><p>${name}${firmenname ? ' ('+firmenname+')' : ''} | ${email} | ${telefon||'-'}</p><p>Adresse: ${adresse||'-'}</p><p>Tätigkeitsbereich: ${taetigkeitsbereich}</p><p>${teamText}</p><p>Website: ${website||'-'}</p><p>Vermarktung: ${vermarktungList}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
-  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, replyTo: email, subject: `Makler-Registrierung – ${name}`, html }).catch(e => console.error('Mail-Fehler:', e));
+  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, cc: NOTIFY_CC_MARTIN, replyTo: email, subject: `Makler-Registrierung – ${name}`, html }).catch(e => console.error('Mail-Fehler:', e));
   const token = signSession({ id: created.id, email, exp: Date.now() + 90 * 24 * 60 * 60 * 1000 });
   res.setHeader('Set-Cookie', `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${90 * 24 * 60 * 60}`);
   res.status(200).json({ ok: true });

@@ -1,4 +1,4 @@
-const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, SEND_FROM } = require('../lib/shared');
+const { sanitize, isRateLimited, isGibberish, hashIp, getSupabase, sendEmail, NOTIFY_TO, NOTIFY_CC_MARTIN, SEND_FROM } = require('../lib/shared');
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
@@ -33,6 +33,6 @@ module.exports = async (req, res) => {
   if (dbError) { console.error('Supabase insert error:', dbError); return res.status(500).json({ error: 'Speicherfehler.' }); }
   const ts = new Date().toLocaleString('de-DE');
   const html = `<h2>Neuer Mietantrag Bauernwohnung</h2><p>${name} | ${email} | ${telefon||'-'}</p><p>Adresse: ${adresse||'-'}</p><p>Tätigkeit: ${taetigkeit||'-'}</p><p>Monatliches Einkommen: ${einkommen_monatlich||'-'} | Quelle: ${einkommen_quelle||'-'}</p><p>Finanzielle Verhältnisse: ${finanzielle_verhaeltnisse||'-'}</p><p>Personen: ${anzahl_personen||'-'} | Haustiere: ${haustiere ? (haustiere_welche||'ja') : 'nein'}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
-  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, replyTo: email, subject: `Mietantrag Bauernwohnung – ${name}`, html }).catch(e => console.error('Mail-Fehler:', e));
+  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, cc: NOTIFY_CC_MARTIN, replyTo: email, subject: `Mietantrag Bauernwohnung – ${name}`, html }).catch(e => console.error('Mail-Fehler:', e));
   res.status(200).json({ ok: true });
 };
