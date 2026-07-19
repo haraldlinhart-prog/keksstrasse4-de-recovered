@@ -51,6 +51,10 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
         <div style="position:absolute;left:-9999px"><input type="text" id="reg_hp" tabindex="-1" autocomplete="off"></div>
         <input type="hidden" id="reg_elapsed" value="0">
         <div class="f-row">
+          <div class="f-group"><label>E-Mail *</label><input type="email" id="r_email" required></div>
+          <div class="f-group"><label>Passwort * (min. 8 Zeichen)</label><input type="password" id="r_password" minlength="8" required><p style="font-size:.76rem;color:var(--ink2);margin-top:.35rem">Bitte wählen Sie Ihr eigenes individuelles Passwort.</p></div>
+        </div>
+        <div class="f-row">
           <div class="f-group"><label>Name *</label><input type="text" id="r_name" required></div>
           <div class="f-group"><label>Telefon</label><input type="tel" id="r_telefon"></div>
         </div>
@@ -70,10 +74,6 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
           </div>
         </div>
         <div class="f-group"><label>Die Adresse unserer Website lautet</label><input type="url" id="r_website" placeholder="https://www.ihre-maklerseite.de"></div>
-        <div class="f-row">
-          <div class="f-group"><label>E-Mail *</label><input type="email" id="r_email" required></div>
-          <div class="f-group"><label>Passwort * (min. 8 Zeichen)</label><input type="password" id="r_password" minlength="8" required></div>
-        </div>
         <div class="check-group">
           <label>Wie wird das Haus vermarktet?</label>
           <div class="check-row"><input type="checkbox" id="r_kundenbestand"><label for="r_kundenbestand">Bestehender Kundenbestand</label></div>
