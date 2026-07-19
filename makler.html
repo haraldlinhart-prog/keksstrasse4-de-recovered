@@ -56,17 +56,17 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
         </div>
         <div class="f-group"><label>Adresse</label><input type="text" id="r_adresse"></div>
         <div class="f-group"><label>Mein/unser Tätigkeitsbereich ist im regionalen Raum von: *</label><input type="text" id="r_taetigkeitsbereich" placeholder="z. B. Schweinfurt und Umgebung, 30 km Radius …" required></div>
-        <div class="f-group">
+        <div class="check-group">
           <label>Ich arbeite</label>
           <div class="check-row" style="align-items:center">
-            <input type="radio" name="r_arbeitsweise" id="r_allein" value="allein" checked onchange="toggleKollegenInput()">
-            <label for="r_allein" style="font-weight:400">allein</label>
+            <input type="radio" name="r_arbeitsweise" id="r_allein" value="allein" checked onchange="toggleKollegenInput()" style="margin:0">
+            <label for="r_allein" style="display:inline!important;font-weight:400;margin:0">allein</label>
           </div>
           <div class="check-row" style="align-items:center">
-            <input type="radio" name="r_arbeitsweise" id="r_team" value="team" onchange="toggleKollegenInput()">
-            <label for="r_team" style="font-weight:400">mit</label>
+            <input type="radio" name="r_arbeitsweise" id="r_team" value="team" onchange="toggleKollegenInput()" style="margin:0">
+            <label for="r_team" style="display:inline!important;font-weight:400;margin:0">mit</label>
             <input type="number" id="r_kollegen_anzahl" min="1" style="width:70px;padding:.4rem .5rem;border:1.5px solid var(--stone);border-radius:7px;font-family:var(--ff-b);font-size:.9rem;background:var(--cream)" disabled>
-            <label for="r_kollegen_anzahl" style="font-weight:400">Kolleg:innen</label>
+            <label for="r_kollegen_anzahl" style="display:inline!important;font-weight:400;margin:0">Kolleg:innen</label>
           </div>
         </div>
         <div class="f-group"><label>Die Adresse unserer Website lautet</label><input type="url" id="r_website" placeholder="https://www.ihre-maklerseite.de"></div>
