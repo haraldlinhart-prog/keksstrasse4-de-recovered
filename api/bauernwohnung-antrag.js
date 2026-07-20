@@ -20,6 +20,9 @@ module.exports = async (req, res) => {
   const anzahl_personen = sanitize(body.anzahl_personen || '');
   const haustiere = !!body.haustiere;
   const haustiere_welche = sanitize(body.haustiere_welche || '');
+  const besichtigung_erbeten = !!body.besichtigung_erbeten;
+  const besichtigung_datum = sanitize(body.besichtigung_datum || '');
+  const besichtigung_zeit = sanitize(body.besichtigung_zeit || '');
   const nachricht = sanitize(body.nachricht || '');
   if (isGibberish(nachricht) || isGibberish(name)) return res.status(200).json({ ok: true });
   if (!name || !email) return res.status(400).json({ error: 'Name und E-Mail sind Pflichtfelder.' });
@@ -27,12 +30,14 @@ module.exports = async (req, res) => {
   const supabase = getSupabase();
   const { error: dbError } = await supabase.from('keks_bauernwohnung_antrag').insert({
     name, adresse, email, telefon, taetigkeit, einkommen_monatlich, einkommen_quelle,
-    finanzielle_verhaeltnisse, anzahl_personen, haustiere, haustiere_welche, nachricht,
+    finanzielle_verhaeltnisse, anzahl_personen, haustiere, haustiere_welche,
+    besichtigung_erbeten, besichtigung_datum, besichtigung_zeit, nachricht,
     ip_hash: hashIp(ip)
   });
   if (dbError) { console.error('Supabase insert error:', dbError); return res.status(500).json({ error: 'Speicherfehler.' }); }
   const ts = new Date().toLocaleString('de-DE');
-  const html = `<h2>Neuer Mietantrag Bauernwohnung</h2><p>${name} | ${email} | ${telefon||'-'}</p><p>Adresse: ${adresse||'-'}</p><p>Tätigkeit: ${taetigkeit||'-'}</p><p>Monatliches Einkommen: ${einkommen_monatlich||'-'} | Quelle: ${einkommen_quelle||'-'}</p><p>Finanzielle Verhältnisse: ${finanzielle_verhaeltnisse||'-'}</p><p>Personen: ${anzahl_personen||'-'} | Haustiere: ${haustiere ? (haustiere_welche||'ja') : 'nein'}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
-  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, cc: NOTIFY_CC_MARTIN, replyTo: email, subject: `Mietantrag Bauernwohnung – ${name}`, html }).catch(e => console.error('Mail-Fehler:', e));
+  const html = `<h2>Neuer Mietantrag Bauernwohnung</h2><p>${name} | ${email} | ${telefon||'-'}</p><p>Adresse: ${adresse||'-'}</p><p>Tätigkeit: ${taetigkeit||'-'}</p><p>Monatliches Einkommen: ${einkommen_monatlich||'-'} | Quelle: ${einkommen_quelle||'-'}</p><p>Finanzielle Verhältnisse: ${finanzielle_verhaeltnisse||'-'}</p><p>Personen: ${anzahl_personen||'-'} | Haustiere: ${haustiere ? (haustiere_welche||'ja') : 'nein'}</p><p>Besichtigung erbeten: ${besichtigung_erbeten ? 'Ja' : 'Nein'}${besichtigung_erbeten ? ` | Terminvorschlag: ${besichtigung_datum||'-'} ${besichtigung_zeit||''}` : ''}</p><p>${(nachricht||'-').replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#aaa">${ts}</p>`;
+  await sendEmail({ from: SEND_FROM, to: NOTIFY_TO, cc: NOTIFY_CC_MARTIN, replyTo: email, subject: `Mietinteresse Wohnung – ${name}${besichtigung_erbeten ? ' (Besichtigung erbeten)' : ''}`, html }).catch(e => console.error('Mail-Fehler:', e));
   res.status(200).json({ ok: true });
 };
+

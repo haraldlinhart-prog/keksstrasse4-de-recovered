@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mietantrag Bauernwohnung – Leibnizstr. 4, Schweinfurt</title>
+<title>Wohnung mieten – Leibnizstr. 4, Schweinfurt</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--terracotta:#b5622f;--terracotta-dk:#8f4a20;--terracotta-lt:#d98a55;--cream:#faf5ec;--sand:#f0e6d6;--stone:#e4d7c1;--walnut:#3a2c1e;--walnut2:#5c4632;--ink:#2b2118;--ink2:#5a4d3f;--green:#5b7a4a;--ff-d:'Cormorant Garamond',Georgia,serif;--ff-b:'Inter',system-ui,sans-serif}
@@ -27,9 +27,9 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
 
 <div class="wrap">
   <div class="hero-block">
-    <p class="eyebrow">Mietantrag</p>
-    <h1>Mietantrag Bauernwohnung</h1>
-    <p>Bitte füllen Sie den Antrag vollständig aus. Wir melden uns nach Prüfung Ihrer Angaben bei Ihnen.</p>
+    <p class="eyebrow">Mietinteresse</p>
+    <h1>Wohnung mieten</h1>
+    <p>Hier können Sie uns die ersten Basis-Informationen mitteilen. Das ist noch kein verbindlicher Mietantrag – wir melden uns danach gerne bei Ihnen für alles Weitere.</p>
     <p style="margin-top:.6rem;font-size:.85rem">Inklusive (in allen drei Einheiten): Vodafone-Internet mit eigenem Router (500 Mbit/s) &amp; Festnetznummer. Diese möblierte Wohnung bietet zusätzlich ein Heimkino im Wohnzimmer (TV, herunterfahrbare Leinwand, Beamer in der Wohnwand, JBL-Bluetooth-Lautsprecher).</p>
   </div>
 
@@ -64,11 +64,18 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
       </div>
       <div class="f-group" id="haustiereWelcheGroup"><label>Welche Haustiere?</label><input type="text" id="a_haustiere_welche" placeholder="z. B. 1 Hund, 2 Katzen"></div>
 
+      <div class="section-label">Besichtigung</div>
+      <div class="check-row"><input type="checkbox" id="a_besichtigung"><label for="a_besichtigung">Besichtigung erbeten</label></div>
+      <div class="f-row" id="besichtigungTerminGroup" style="display:none">
+        <div class="f-group"><label>Schlage Termin vor am</label><input type="date" id="a_besichtigung_datum"></div>
+        <div class="f-group"><label>Uhrzeit</label><input type="time" id="a_besichtigung_zeit"></div>
+      </div>
+
       <div class="section-label">Sonstiges</div>
       <div class="f-group"><label>Zusätzliche Infos</label><textarea id="a_nachricht" placeholder="Alles Weitere, das wir wissen sollten."></textarea></div>
 
       <p class="consent">Details in unserer <a href="/#legal-datenschutz">Datenschutzerklärung</a>.</p>
-      <button type="submit" class="submit-btn" style="margin-top:1rem">Mietantrag senden</button>
+      <button type="submit" class="submit-btn" style="margin-top:1rem">Absenden</button>
     </form>
   </div>
 
@@ -81,6 +88,10 @@ function elapsedFor(){var ef=document.getElementById('a_elapsed');var start=pars
 
 document.getElementById('a_haustiere').addEventListener('change', function(){
   document.getElementById('haustiereWelcheGroup').style.display = this.checked ? 'block' : 'none';
+});
+
+document.getElementById('a_besichtigung').addEventListener('change', function(){
+  document.getElementById('besichtigungTerminGroup').style.display = this.checked ? 'grid' : 'none';
 });
 
 document.getElementById('antragForm').addEventListener('submit', async function(e){
@@ -105,6 +116,9 @@ document.getElementById('antragForm').addEventListener('submit', async function(
         anzahl_personen: document.getElementById('a_personen').value,
         haustiere: document.getElementById('a_haustiere').checked,
         haustiere_welche: document.getElementById('a_haustiere_welche').value,
+        besichtigung_erbeten: document.getElementById('a_besichtigung').checked,
+        besichtigung_datum: document.getElementById('a_besichtigung_datum').value,
+        besichtigung_zeit: document.getElementById('a_besichtigung_zeit').value,
         nachricht: document.getElementById('a_nachricht').value,
         _hp: honeypot, _elapsed: elapsedFor()
       })
@@ -112,7 +126,7 @@ document.getElementById('antragForm').addEventListener('submit', async function(
     var data = await res.json();
     if (res.ok && data.ok) {
       msg.className = 'form-msg success';
-      msg.textContent = 'Vielen Dank für Ihren Mietantrag! Wir melden uns bei Ihnen.';
+      msg.textContent = 'Vielen Dank für Ihre Anfrage! Wir melden uns bei Ihnen.';
       this.reset();
       document.getElementById('haustiereWelcheGroup').style.display = 'none';
     } else {
@@ -121,8 +135,9 @@ document.getElementById('antragForm').addEventListener('submit', async function(
   } catch(err) {
     msg.className = 'form-msg error'; msg.textContent = 'Verbindungsfehler.';
   }
-  btn.disabled = false; btn.textContent = 'Mietantrag senden';
+  btn.disabled = false; btn.textContent = 'Absenden';
 });
 </script>
 </body>
 </html>
+
