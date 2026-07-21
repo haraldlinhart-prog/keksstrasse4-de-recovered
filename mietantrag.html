@@ -70,6 +70,11 @@ footer{padding:2rem 0;text-align:center;font-size:.78rem;color:var(--ink2)}
         <div class="f-group"><label>Schlage Termin vor am</label><input type="date" id="a_besichtigung_datum"></div>
         <div class="f-group"><label>Uhrzeit</label><input type="time" id="a_besichtigung_zeit"></div>
       </div>
+      <div class="f-group"><label>Vor Besichtigung möchte ich ein ausführliches Gespräch</label><select id="a_callart"><option value="">— bitte wählen —</option><option value="a) Telefonat">a) Telefonat</option><option value="b) Video-Call per WhatsApp">b) Video-Call per WhatsApp</option><option value="c) Video-Call per ZOOM">c) Video-Call per ZOOM</option><option value="d) Video-Call per Google Meet">d) Video-Call per Google Meet</option><option value="e) Video-Call per Microsoft Teams">e) Video-Call per Microsoft Teams</option></select></div>
+      <div class="f-row">
+        <div class="f-group"><label>Vorschlag Datum (Gespräch)</label><input type="date" id="a_call_datum"></div>
+        <div class="f-group"><label>Vorschlag Uhrzeit (Gespräch)</label><input type="time" id="a_call_uhrzeit"></div>
+      </div>
 
       <div class="section-label">Sonstiges</div>
       <div class="f-group"><label>Zusätzliche Infos</label><textarea id="a_nachricht" placeholder="Alles Weitere, das wir wissen sollten."></textarea></div>
@@ -119,6 +124,9 @@ document.getElementById('antragForm').addEventListener('submit', async function(
         besichtigung_erbeten: document.getElementById('a_besichtigung').checked,
         besichtigung_datum: document.getElementById('a_besichtigung_datum').value,
         besichtigung_zeit: document.getElementById('a_besichtigung_zeit').value,
+        callart: document.getElementById('a_callart').value,
+        call_datum: document.getElementById('a_call_datum').value,
+        call_uhrzeit: document.getElementById('a_call_uhrzeit').value,
         nachricht: document.getElementById('a_nachricht').value,
         _hp: honeypot, _elapsed: elapsedFor()
       })
