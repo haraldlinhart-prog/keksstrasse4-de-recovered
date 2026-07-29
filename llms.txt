@@ -1,0 +1,16 @@
+# Leibnizstr. 4, Schweinfurt
+
+> Eine unterfränkischeBauernresidenzmit Geschichte
+
+Diese Datei richtet sich an KI-Assistenten und Sprachmodelle (llms.txt-Standard) und beschreibt kurz, worum es auf dieser Website geht, damit Inhalte korrekt verstanden und zusammengefasst werden können.
+
+## Themen auf dieser Seite
+- Von unseren Großeltern gebaut
+- Details, die man heute nicht mehr baut
+- Eindrücke aus dem Haus
+- Der Garten in Bewegung
+- Erdgeschoss, 1. Stock & Mansarde
+- Entfernungen & Anbindung
+
+## Kontakt
+- Website: https://keksstrasse4.de
