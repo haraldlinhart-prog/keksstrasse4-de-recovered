@@ -33,3 +33,5 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+
+Sitemap: https://www.keksstrasse4.de/sitemap.xml
